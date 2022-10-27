@@ -112,7 +112,6 @@ resource "docker_container" "vaultini" {
     protocol = "tcp"
   }
 
-  # TODO: TLS possible later
   volumes {
     host_path      = each.value.host_path_certs
     container_path = "/vault/certs"

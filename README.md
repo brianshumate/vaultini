@@ -15,7 +15,7 @@ It is useful for development and testing, but not for production.
 oooo8oooo8oooo8oooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8oooo8ooo
 ```
 
-# What?
+## What?
 
 Vaultini is a minimal 5-node Vault cluster running the OSS edition with Integrated Storage on Docker. It is powered by a `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs).
 
@@ -27,9 +27,9 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
 
 1. Clone this repository.
 
-1. Change into the `vaultini` directory.
+2. `cd vaultini`
 
-1. Add the Vaultini Certificate Authority certificate to your operating system trust store:
+3. Add the Vaultini Certificate Authority certificate to your operating system trust store:
 
    - For macOS:
 
@@ -41,9 +41,9 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
 
      - You will be prompted for your user password; enter it to add the certificate.
 
-1. Type `make` and press [return].
+4. Type `make` and press [return].
 
-1. Follow the instructions.
+5. Follow the instructions.
 
 ### Cleanup
 
@@ -64,7 +64,7 @@ make cleanest
 Run a specific version of Vault >= 1.7.0.
 
 ```shell
-TF_VAR_vault_version=1.10.0 make
+TF_VAR_vault_version=1.11.0 make
 ```
 
 ## Who?
