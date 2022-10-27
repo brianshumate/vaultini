@@ -39,7 +39,7 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
       ./containers/vaultini1/certs/vaultini-ca.pem
    ```
 
-   - You will be prompted for your user password; enter it to add the certificate.
+     - You will be prompted for your user password; enter it to add the certificate.
 
 1. Type `make` and press [return].
 
