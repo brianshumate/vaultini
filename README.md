@@ -26,6 +26,7 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
 1. Clone this repository.
 1. Change into the `vaultini` directory.
 1. Type `make` and press [return].
+1. Follow the instructions.
 
 ### Specific Vault version
 
@@ -36,3 +37,5 @@ $ TF_VAR_vault_version=1.10.0 make
 ```
 
 ## Who?
+
+[Brian Shumate](https://github.com/brianshumate)
