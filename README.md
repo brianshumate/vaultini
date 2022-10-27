@@ -1,11 +1,11 @@
 # Vaultini
 
 ```plaintext
-ooooo  oooo                    o888   o8   o88               o88
-    888    88 ooooooo oooo  oooo   888 o888oo oooo  oo oooooo   oooo
+  ooooo  oooo                    o888   o8   o88               o88
+   888    88 ooooooo oooo  oooo   888 o888oo oooo  oo oooooo   oooo
     888  88  ooooo888 888   888   888  888    888   888   888   888
-    88888 888    888 888   888   888  888    888   888   888   888
-    888   88ooo88 8o 888o88 8o o888o  888o o888o o888o o888o o888o
+     88888 888    888 888   888   888  888    888   888   888   888
+      888   88ooo88 8o 888o88 8o o888o  888o o888o o888o o888o o888o
 
 oooo8oooo8oooo8oooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8oooo8ooo
 
@@ -15,7 +15,7 @@ It is useful for development and testing, but not for production.
 oooo8oooo8oooo8oooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8oooo8ooo
 ```
 
-## What?
+# What?
 
 Vaultini is a minimal 5-node Vault cluster running the OSS edition with Integrated Storage on Docker. It is powered by a `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs).
 
@@ -39,7 +39,7 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
       ./containers/vaultini1/certs/vaultini-ca.pem
    ```
 
-     - You will be prompted for your user password; enter it to add the certificate.
+   - You will be prompted for your user password; enter it to add the certificate.
 
 1. Type `make` and press [return].
 
