@@ -24,17 +24,22 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
 ## How?
 
 1. Clone this repository.
+
 1. Change into the `vaultini` directory.
+
 1. Add the Vaultini Certificate Authority certificate to your operating system trust store:
-  - For macOS: 
-     ```shell
-     $ sudo security add-trusted-cert -d -r trustAsRoot \
-         -k /Library/Keychains/System.keychain \
-         ./containers/vaultini1/certs/vaultini-ca.pem
-     ```
-    - You will be prompted for your user password; enter it to add the certificate.
+
+- For macOS:
+
+    $ sudo security add-trusted-cert -d -r trustAsRoot \
+       -k /Library/Keychains/System.keychain \
+       ./containers/vaultini1/certs/vaultini-ca.pem
+
+  - You will be prompted for your user password; enter it to add the certificate.
+
 1. Type `make` and press [return].
-1. Follow the instructions.
+
+2. Follow the instructions.
 
 ### Cleanup
 
