@@ -1,5 +1,7 @@
 .terraform
 .terraform.lock.hcl
+.vaultini1_init
 terraform.tfstate
 terraform.tfstate.backup
-vaultini?/data/*
+containers/vaultini?/data/*
+vaultini.log

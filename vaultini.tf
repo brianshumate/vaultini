@@ -137,7 +137,7 @@ resource "docker_container" "vaultini" {
 
 resource "null_resource" "active_node_init" {
   provisioner "local-exec" {
-    command = "sleep 5 ; vault operator init -key-shares=1 -key-threshold=1 > ${path.cwd}/.vaultini1_init"
+    command = "while ! curl --insecure --fail --silent https://127.0.0.1:8200/v1/sys/seal-status --output /dev/null ; do printf '.' ; sleep 4 ; done ; vault operator init -key-shares=1 -key-threshold=1 > ${path.cwd}/.vaultini1_init"
     environment = {
       VAULT_ADDR = "https://127.0.0.1:8200"
       VAULT_CACERT = "${path.cwd}/containers/vaultini1/certs/vaultini-ca.pem"
@@ -152,7 +152,7 @@ resource "null_resource" "active_node_init" {
 
 resource "null_resource" "active_node_unseal" {
   provisioner "local-exec" {
-    command = "while [ ! -f ${path.cwd}/.vaultini1_init ] ; do sleep 1 ; done ; export UNSEAL_KEY=$(grep 'Unseal Key 1' ${path.cwd}/.vaultini1_init | awk '{print $NF}') ; vault operator unseal $UNSEAL_KEY"
+    command = "while [ ! -f ${path.cwd}/.vaultini1_init ] ; do printf '.' ; sleep 1 ; done &&export UNSEAL_KEY=$(grep 'Unseal Key 1' ${path.cwd}/.vaultini1_init | awk '{print $NF}') && vault operator unseal $UNSEAL_KEY"
     environment = {
       VAULT_ADDR = "https://127.0.0.1:8200"
       VAULT_CACERT = "${path.cwd}/containers/vaultini1/certs/vaultini-ca.pem"
