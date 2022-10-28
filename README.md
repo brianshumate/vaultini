@@ -57,7 +57,7 @@ There are just a handful of steps to make your own Vaultini.
 
      - You will be prompted for your user password; enter it to add the certificate.
 
-4. Type `make` and press `[return]`; successful output resembles this example and includes the initial root token value for the sake of convenience and ease of use.
+4. Type `make` and press `[return]`; successful output resembles this example and includes the initial root token value for the sake of convenience and ease of use:
 
    ```plaintext
    [vaultini] Initializing Terraform workspace ...Done.

@@ -32,11 +32,10 @@ unseal_nodes:
 	@VAULT_ADDR=https://127.0.0.1:8250 vault operator unseal $(UNSEAL_KEY) >> $(VAULTINI_LOG_FILE)
 	@printf 'vaultini5. '
 	@echo 'Done.'
-	@echo "$(MY_NAME_IS) Export VAULT_ADDR to address the active node: export VAULT_ADDR=https://127.0.0.1:8200"
+	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
 	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
 vault_status:
-#	@export VAULT_STATUS=$$(vault status > /dev/null 2>&1 ; printf $$?) ; echo "Vault status is: $$VAULT_STATUS"
 	@printf "$(MY_NAME_IS) Checking Vault active node status ..."
 	@until [ $$(vault status > /dev/null 2>&1 ; echo $$?) -eq 0 ] ; do sleep 1 && printf . ; done
 	@echo 'Done.'
