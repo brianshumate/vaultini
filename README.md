@@ -57,9 +57,19 @@ There are just a handful of steps to make your own Vaultini.
 
      - You will be prompted for your user password; enter it to add the certificate.
 
-4. Type `make` and press [return].
+4. Type `make` and press `[return]`; successful output resembles this example and includes the initial root token value for the sake of convenience and ease of use.
 
-5. Follow the instructions.
+   ```plaintext
+   [vaultini] Initializing Terraform workspace ...Done.
+   [vaultini] Applying Terraform configuration ...Done.
+   [vaultini] Checking Vault active node status ...Done.
+   [vaultini] Checking Vault initialization status ...Done.
+   [vaultini] Unsealing cluster nodes .....vaultini2. vaultini3. vaultini4. vaultini5. Done.
+   [vaultini] Export VAULT_ADDR to address the active node: export VAULT_ADDR=https://127.0.0.1:8200
+   [vaultini] Login to Vault with initial root token: vault login hvs.2p3c0ff33eOynOqlZCTltuA6
+   ```
+
+5. Follow the instructions to set an appropriate `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
 
 ### Specific Vault version
 
@@ -83,6 +93,18 @@ To clean up **everything** including Terraform runtime configuration and state:
 make cleanest
 ```
 
+### What next?
+
+A great resource for learning more about Vault is the [HashiCorp Developer](https://developer.hashicorp.com) site, which has a nice [Vault tutorial library](https://developer.hashicorp.com/tutorials/library?product=vault) available.
+
+If you are completely new to Vault, check out the Get Started series:
+
+- [CLI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started)
+- [HCP Vault Quick Start](https://developer.hashicorp.com/vault/tutorials/cloud)
+- [UI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started-ui)
+
+The tutorial library also has a wide range of intermediate and advanced tutorials with integrated hands on labs. Be sure to explore them all!
+
 ## Who?
 
-[Brian Shumate](https://github.com/brianshumate)
+- [Brian Shumate](https://github.com/brianshumate)
