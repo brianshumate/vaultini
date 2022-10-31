@@ -11,15 +11,15 @@ listener "tcp" {
 }
 
 storage "raft" {
-  path = "/vault/data"
+  path    = "/vault/data"
   node_id = "vaultini2"
 
   retry_join {
     leader_tls_servername   = "vaultini1.vaultini.lan"
-    leader_api_addr = "https://10.1.42.101:8200"
-    leader_ca_cert_file = "/vault/certs/vaultini-ca.pem"
+    leader_api_addr         = "https://10.1.42.101:8200"
+    leader_ca_cert_file     = "/vault/certs/vaultini-ca.pem"
     leader_client_cert_file = "/vault/certs/server-cert.pem"
-    leader_client_key_file = "/vault/certs/server-key.pem"
+    leader_client_key_file  = "/vault/certs/server-key.pem"
   }
 
 }

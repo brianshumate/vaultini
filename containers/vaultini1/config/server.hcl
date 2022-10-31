@@ -11,6 +11,6 @@ listener "tcp" {
 }
 
 storage "raft" {
-  path = "/vault/data"
+  path    = "/vault/data"
   node_id = "vaultini1"
 }
