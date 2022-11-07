@@ -7,7 +7,11 @@ VAULTINI_LOG_FILE = ./vaultini.log
 
 default: all
 
-all: prerequisites provision vault_status unseal_nodes audit_device
+all: prerequisites provision vault_status unseal_nodes audit_device done
+
+done:
+	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
+	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
 VAULT_BINARY_OK=$$(which vault > /dev/null 2>&1 ; echo $$?)
 prerequisites:
@@ -37,8 +41,6 @@ unseal_nodes:
 	@VAULT_ADDR=https://127.0.0.1:8250 vault operator unseal $(UNSEAL_KEY) >> $(VAULTINI_LOG_FILE)
 	@printf 'vaultini5. '
 	@echo 'Done.'
-	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
-	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
 ROOT_TOKEN=$$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')
 audit_device:

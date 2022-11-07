@@ -150,8 +150,9 @@ There are just a handful of steps to make your own Vaultini.
    [vaultini] Checking Vault active node status ...Done.
    [vaultini] Checking Vault initialization status ...Done.
    [vaultini] Unsealing cluster nodes .....vaultini2. vaultini3. vaultini4. vaultini5. Done.
+   [vaultini] Enable audit device ...Done.
    [vaultini] Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200
-   [vaultini] Login to Vault with initial root token: vault login hvs.5JLMfKqhHzRogP8ZeHc0ff33
+   [vaultini] Login to Vault with initial root token: vault login hvs.E5DA1IvLTq9y1q8p1Oc0ff33
    ```
 
 5. Follow the instructions to set an appropriate `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
