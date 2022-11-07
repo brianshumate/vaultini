@@ -27,7 +27,7 @@ To quickly establish a containerized Vault cluster with Integrated Storage for d
 
 Making your own Vaultini is a quick process once you have the required prerequisites.
 
-### Establish prerequisites
+### Prerequisites
 
 To make a Vaultini, your host computer must have the following software installed:
 
@@ -156,17 +156,9 @@ There are just a handful of steps to make your own Vaultini.
 
 5. Follow the instructions to set an appropriate `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
 
-### Specific Vault version
-
-You can run a specific version of Vault >= 1.7.0; Versions >= 1.11.0 are recommended for ideal Integrated Storage support.
-
-```shell
-TF_VAR_vault_version=1.11.0 make
-```
-
 ### Cleanup
 
-To clean up Docker containers and all generated artifacts:
+To clean up Docker containers and all generated artifacts, **including audit device log files**:
 
 ```shell
 make clean
@@ -192,6 +184,36 @@ To remove the CA certificate from your OS trust store:
 - For Linux:
 
   - Follow the documentation for your specific Linux distribution to remove the certificate.
+
+### Notes
+
+#### Configuration, data & logs
+
+Each Vault server has a directory under `containers` that holds the server configuration, TLS certificates and key, Vault data, and audit device logs. For example, here is the structure of the first server, _vaultini1_ as it appears when active.
+
+```shell
+$ tree containers/vaultini1
+containers/vaultini1
+├── certs
+│   ├── server-cert.pem
+│   ├── server-key.pem
+│   ├── vaultini-ca-chain.pem
+│   └── vaultini-ca.pem
+├── config
+│   └── server.hcl
+├── data
+└── logs
+
+4 directories, 5 files
+```
+
+#### Specific Vault version
+
+You can run a specific version of Vault >= 1.7.0; Versions >= 1.11.0 are recommended for ideal Integrated Storage support.
+
+```shell
+TF_VAR_vault_version=1.11.0 make
+```
 
 ### What next?
 

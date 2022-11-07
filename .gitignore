@@ -4,4 +4,5 @@
 terraform.tfstate
 terraform.tfstate.backup
 containers/vaultini?/data/*
+containers/vaultini?/logs/*
 vaultini.log

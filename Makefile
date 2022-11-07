@@ -1,12 +1,13 @@
-MY_NAME_IS :=[vaultini]
+MY_NAME_IS := [vaultini]
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
+VAULTINI_AUDIT_LOGS = ./containers/vaultini?/logs/*
 VAULTINI_DATA = ./containers/vaultini?/data/*
 VAULTINI_INIT = ./.vaultini?_init
 VAULTINI_LOG_FILE = ./vaultini.log
 
 default: all
 
-all: prerequisites provision vault_status unseal_nodes
+all: prerequisites provision vault_status unseal_nodes audit_device
 
 VAULT_BINARY_OK=$$(which vault > /dev/null 2>&1 ; echo $$?)
 prerequisites:
@@ -39,6 +40,12 @@ unseal_nodes:
 	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
 	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
+ROOT_TOKEN=$$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')
+audit_device:
+	@printf "$(MY_NAME_IS) Enable audit device ..."
+	@VAULT_ADDR=https://127.0.0.1:8220 VAULT_TOKEN=$(ROOT_TOKEN) vault audit enable file file_path=/vault/logs/vault_audit.log > /dev/null 2>&1
+	@echo 'Done.'
+
 vault_status:
 	@printf "$(MY_NAME_IS) Checking Vault active node status ..."
 	@until [ $$(vault status > /dev/null 2>&1 ; echo $$?) -eq 0 ] ; do sleep 1 && printf . ; done
@@ -51,9 +58,10 @@ clean:
 	@printf "$(MY_NAME_IS) Destroying Terraform configuration ..."
 	@terraform destroy -auto-approve >> $(VAULTINI_LOG_FILE)
 	@echo 'Done.'
-	@printf "$(MY_NAME_IS) Removing files created by Vaultini ..."
+	@printf "$(MY_NAME_IS) Removing artifacts created by Vaultini ..."
 	@rm -rf $(VAULTINI_DATA)
 	@rm -f $(VAULTINI_INIT)
+	@rm -rf $(VAULTINI_AUDIT_LOGS)
 	@rm -f $(VAULTINI_LOG_FILE)
 	@echo 'Done.'
 
