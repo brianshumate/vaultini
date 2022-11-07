@@ -59,7 +59,7 @@ There are just a handful of steps to make your own Vaultini.
 
    - For Linux:
 
-     - Alpine:
+     - **Alpine**
 
         Update the package cache and install the `ca-certificates` package.
 
@@ -95,7 +95,22 @@ There are just a handful of steps to make your own Vaultini.
         # No output expected
         ```
 
-     - RHEL:
+     - **Debian & Ubuntu**
+
+        Install the `ca-certificates` package.
+
+        ```shell
+        $ sudo apt-get install -y ca-certificates
+         apt-get install -y ca-certificates
+         Reading package lists... Done
+         ...snip...
+         Updating certificates in /etc/ssl/certs...
+         0 added, 0 removed; done.
+         Running hooks in /etc/ca-certificates/update.d...
+         done.
+        ```
+
+     - **RHEL**
 
        From within this repository directory, copy the Vaultini CA certificate to the `/etc/pki/ca-trust/source/anchors` directory.
 
@@ -110,21 +125,6 @@ There are just a handful of steps to make your own Vaultini.
         ```shell
         $ sudo update-ca-trust
         # No output expected
-        ```
-
-     - Ubuntu:
-
-        Install the `ca-certificates` package.
-
-        ```shell
-        $ sudo apt-get install -y ca-certificates
-         apt-get install -y ca-certificates
-         Reading package lists... Done
-         ...snip...
-         Updating certificates in /etc/ssl/certs...
-         0 added, 0 removed; done.
-         Running hooks in /etc/ca-certificates/update.d...
-         done.
         ```
 
        From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
