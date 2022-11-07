@@ -35,7 +35,7 @@ To make a Vaultini, your host computer must have the following software installe
 
 - [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.3 on darwin_arm64)
 
-> **NOTE:** Vaultini is currently known to function on macOS, with planned support for additional operating systems going forward.
+> **NOTE:** Vaultini is currently known to function on macOS with Intel or Apple silicon processors. Additional operating system support will be added soon.
 
 ### Make your own Vaultini
 
@@ -203,7 +203,9 @@ If you are completely new to Vault, check out the Get Started series:
 - [HCP Vault Quick Start](https://developer.hashicorp.com/vault/tutorials/cloud)
 - [UI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started-ui)
 
-The tutorial library also has a wide range of intermediate and advanced tutorials with integrated hands on labs. Be sure to explore them all!
+The tutorial library also has a wide range of intermediate and advanced tutorials with integrated hands on labs.
+
+Be sure to explore them all!
 
 ## Who?
 
