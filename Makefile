@@ -6,7 +6,11 @@ VAULTINI_LOG_FILE = ./vaultini.log
 
 default: all
 
-all: provision vault_status unseal_nodes
+all: prerequisites provision vault_status unseal_nodes
+
+VAULT_BINARY_OK=$$(which vault > /dev/null 2>&1 ; echo $$?)
+prerequisites:
+	@if [ $(VAULT_BINARY_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Vault binary not found in path. Please install Vault and try again." ; exit 1 ; fi
 
 provision:
 	@printf "$(MY_NAME_IS) Initializing Terraform workspace ..."
