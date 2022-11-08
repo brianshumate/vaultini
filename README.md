@@ -101,7 +101,6 @@ There are just a handful of steps to make your own Vaultini.
 
         ```shell
         $ sudo apt-get install -y ca-certificates
-         apt-get install -y ca-certificates
          Reading package lists... Done
          ...snip...
          Updating certificates in /etc/ssl/certs...
@@ -109,6 +108,24 @@ There are just a handful of steps to make your own Vaultini.
          Running hooks in /etc/ca-certificates/update.d...
          done.
         ```
+
+       Copy the Vaultini CA certificate to `/usr/local/share/ca-certificates`.
+
+       ```shell
+       $ sudo cp containers/vaultini1/certs/vaultini-ca.pem \
+           /usr/local/share/ca-certificates/vaultini-ca.crt
+       # No output expected
+       ```
+
+       Update certificates.
+
+       ```shell
+       $ sudo update-ca-certificates
+       Updating certificates in /etc/ssl/certs...
+       1 added, 0 removed; done.
+       Running hooks in /etc/ca-certificates/update.d...
+       done.
+       ```
 
      - **RHEL**
 

@@ -53,7 +53,7 @@ vault_status:
 	@until [ $$(vault status > /dev/null 2>&1 ; echo $$?) -eq 0 ] ; do sleep 1 && printf . ; done
 	@echo 'Done.'
 	@printf "$(MY_NAME_IS) Checking Vault initialization status ..."
-	@until [ $$(vault status | grep "Initialized" | awk '{print $$2}') == "true" ] ; do sleep 1 ; printf . ; done
+	@until [ $$(vault status | grep "Initialized" | awk '{print $$2}') = "true" ] ; do sleep 1 ; printf . ; done
 	@echo 'Done.'
 
 clean:
