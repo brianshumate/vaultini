@@ -21,11 +21,11 @@ Vaultini is a minimal 5-node [Vault](https://www.vaultproject.io) cluster runnin
 
 ## Why?
 
-To quickly establish a containerized Vault cluster with Integrated Storage for development, education, and testing purposes.
+To quickly establish a containerized Vault cluster with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) for development, education, and testing purposes.
 
 ## How?
 
-Making your own Vaultini is a quick process once you have the required prerequisites.
+You can make your own Vaultini with Docker, Terraform, and the Terraform Docker provider.
 
 ### Prerequisites
 
@@ -205,6 +205,8 @@ To remove the CA certificate from your OS trust store:
 
 ### Notes
 
+The following notes should help you to better understand the container structure used by Vaultini along with tips on commonly used features like specifying the Vault version to use, and more.
+
 #### Configuration, data & logs
 
 Each Vault server has a directory under `containers` that holds the server configuration, TLS certificates and key, Vault data, and audit device logs. For example, here is the structure of the first server, _vaultini1_ as it appears when active.
@@ -231,6 +233,14 @@ You can run a specific version of Vault >= 1.7.0; Versions >= 1.11.0 are recomme
 
 ```shell
 TF_VAR_vault_version=1.11.0 make
+```
+
+#### Vault server log level
+
+The default Vault server log level is Info, but you can specify another log level like `Debug`, with the `TF_VAR_vault_log_level` environment variable like this:
+
+```shell
+TF_VAR_vault_log_level=Debug make
 ```
 
 ### What next?

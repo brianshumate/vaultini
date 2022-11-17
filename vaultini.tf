@@ -12,27 +12,6 @@
 # oooo8oooo8oooo8oooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8oooo8oooo
 
 # -----------------------------------------------------------------------
-# Version variables
-# -----------------------------------------------------------------------
-
-# Set TF_VAR_vault_version to override this
-variable "vault_version" {
-    default = "1.12.0"
-}
-
-# -----------------------------------------------------------------------
-# Global variables
-# -----------------------------------------------------------------------
-
-# Set TF_VAR_docker_host to override this
-# tcp with hostname example:
-# export TF_VAR_docker_host="tcp://docker:2345"
-
-variable "docker_host" {
-    default = "unix:///var/run/docker.sock"
-}
-
-# -----------------------------------------------------------------------
 # Provider configuration
 # -----------------------------------------------------------------------
 
@@ -83,7 +62,9 @@ resource "docker_container" "vaultini" {
   command  = ["vault",
               "server",
               "-config",
-              "/vault/config/server.hcl"
+              "/vault/config/server.hcl",
+              "-log-level",
+              "${var.vault_log_level}"
               ]
   image    = docker_image.vault.repo_digest
   must_run = true
