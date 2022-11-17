@@ -209,7 +209,7 @@ The following notes should help you to better understand the container structure
 
 #### Configuration, data & logs
 
-Each Vault server has a directory under `containers` that holds the server configuration, TLS certificates and key, Vault data, and audit device logs. For example, here is the structure of the first server, _vaultini1_ as it appears when active.
+The configuration, data, and audit device log files live in a subdirectory under `containers` that is named after the server. For example, here is the structure of the first server, _vaultini1_ as it appears when active.
 
 ```shell
 $ tree containers/vaultini1
@@ -222,20 +222,27 @@ containers/vaultini1
 ├── config
 │   └── server.hcl
 ├── data
+│   ├── raft
+│   │   ├── raft.db
+│   │   └── snapshots
+│   └── vault.db
 └── logs
+    └── vault_audit.log
 
-4 directories, 5 files
+6 directories, 8 files
 ```
 
-#### Specific Vault version
+#### Run a specific Vault version
 
-You can run a specific version of Vault >= 1.7.0; Versions >= 1.11.0 are recommended for ideal Integrated Storage support.
+Vaultini tries to keep current and offer the latest available Vault Docker image version, but you can also run a specific version of Vault with the `TF_VAR_vault_version` environment variable like this:. 
 
 ```shell
 TF_VAR_vault_version=1.11.0 make
 ```
 
-#### Vault server log level
+> **Tip**: Versions >= 1.11.0 are recommended for ideal Integrated Storage support.
+
+#### Set the Vault server log level
 
 The default Vault server log level is Info, but you can specify another log level like `Debug`, with the `TF_VAR_vault_log_level` environment variable like this:
 
