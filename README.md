@@ -21,7 +21,7 @@ Vaultini is a minimal 5-node [Vault](https://www.vaultproject.io) cluster runnin
 
 ## Why?
 
-To quickly establish a containerized Vault cluster with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) for development, education, and testing purposes.
+To quickly establish a containerized Vault cluster with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) for development, education, and testing.
 
 ## How?
 
@@ -31,9 +31,9 @@ You can make your own Vaultini with Docker, Terraform, and the Terraform Docker 
 
 To make a Vaultini, your host computer must have the following software installed:
 
-- [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.12.0 on macOS version 12.6)
+- [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.14.0 on macOS version 12.6.1)
 
-- [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.3 on darwin_arm64)
+- [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.4 on darwin_arm64)
 
 > **NOTE:** Vaultini is currently known to function on macOS with Intel or Apple silicon processors. Additional operating system support will be added soon.
 
