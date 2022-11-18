@@ -33,7 +33,7 @@ To make a Vaultini, your host computer must have the following software installe
 
 - [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.14.0 on macOS version 12.6.1)
 
-- [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.4 on darwin_arm64)
+- [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.5 darwin_arm64 on macOS version 12.6.1)
 
 > **NOTE:** Vaultini is currently known to function on macOS with Intel or Apple silicon processors. Additional operating system support will be added soon.
 

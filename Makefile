@@ -1,5 +1,6 @@
 MY_NAME_IS := [vaultini]
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
+UNAME := $$(uname)
 VAULTINI_AUDIT_LOGS = ./containers/vaultini?/logs/*
 VAULTINI_DATA = ./containers/vaultini?/data/*
 VAULTINI_INIT = ./.vaultini?_init
@@ -13,11 +14,16 @@ done:
 	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
 	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
+DOCKER_OK=$$(docker info > /dev/null 2>&1; echo $$?)
+TERRAFORM_BINARY_OK=$$(which terraform > /dev/null 2>&1 ; echo $$?)
 VAULT_BINARY_OK=$$(which vault > /dev/null 2>&1 ; echo $$?)
 prerequisites:
-	@if [ $(VAULT_BINARY_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Vault binary not found in path. Please install Vault and try again." ; exit 1 ; fi
+	@if [ $(VAULT_BINARY_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Vault binary not found in path!"; echo "$(MY_NAME_IS) Install Vault and try again: https://developer.hashicorp.com/vault/downloads." ; exit 1 ; fi
+	@if [ $(TERRAFORM_BINARY_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Terraform CLI binary not found in path!" ; echo "$(MY_NAME_IS) Install Terraform CLI and try again: https://developer.hashicorp.com/terraform/downloads" ; exit 1 ; fi
+	@if [ $(DOCKER_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Cannot get Docker info; ensure that Docker is running, and try again." ; exit 1 ; fi
 
 provision:
+	@if [ "$(UNAME)" = "Linux" ]; then echo "$(MY_NAME_IS) [Linux] Setting ownership on container volume directories ..."; echo "$(MY_NAME_IS) [Linux] You could be prompted for your user password by sudo."; sudo chown -R $$USER:$$USER containers; sudo chmod -R 0777 containers; fi
 	@printf "$(MY_NAME_IS) Initializing Terraform workspace ..."
 	@terraform init > $(VAULTINI_LOG_FILE)
 	@echo 'Done.'
@@ -57,6 +63,7 @@ vault_status:
 	@echo 'Done.'
 
 clean:
+	@if [ "$(UNAME)" = "Linux" ]; then echo "$(MY_NAME_IS) [Linux] Setting ownership on container volume directories ..."; echo "$(MY_NAME_IS) [Linux] You could be prompted for your user password by sudo."; sudo chown -R $$USER:$$USER containers; fi
 	@printf "$(MY_NAME_IS) Destroying Terraform configuration ..."
 	@terraform destroy -auto-approve >> $(VAULTINI_LOG_FILE)
 	@echo 'Done.'
