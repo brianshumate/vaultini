@@ -14,9 +14,9 @@ done:
 	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
 	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
-DOCKER_OK=$$(docker info > /dev/null 2>&1; echo $$?)
-TERRAFORM_BINARY_OK=$$(which terraform > /dev/null 2>&1 ; echo $$?)
-VAULT_BINARY_OK=$$(which vault > /dev/null 2>&1 ; echo $$?)
+DOCKER_OK=$$(docker info > /dev/null 2>&1; printf $$?)
+TERRAFORM_BINARY_OK=$$(which terraform > /dev/null 2>&1 ; printf $$?)
+VAULT_BINARY_OK=$$(which vault > /dev/null 2>&1 ; printf $$?)
 prerequisites:
 	@if [ $(VAULT_BINARY_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Vault binary not found in path!"; echo "$(MY_NAME_IS) Install Vault and try again: https://developer.hashicorp.com/vault/downloads." ; exit 1 ; fi
 	@if [ $(TERRAFORM_BINARY_OK) -ne 0 ] ; then echo "$(MY_NAME_IS) Terraform CLI binary not found in path!" ; echo "$(MY_NAME_IS) Install Terraform CLI and try again: https://developer.hashicorp.com/terraform/downloads" ; exit 1 ; fi
@@ -56,10 +56,10 @@ audit_device:
 
 vault_status:
 	@printf "$(MY_NAME_IS) Checking Vault active node status ..."
-	@until [ $$(vault status > /dev/null 2>&1 ; echo $$?) -eq 0 ] ; do sleep 1 && printf . ; done
+	@until [ $$(VAULT_ADDR=https://127.0.0.1:8200 vault status > /dev/null 2>&1 ; printf $$?) -eq 0 ] ; do sleep 1 && printf . ; done
 	@echo 'Done.'
 	@printf "$(MY_NAME_IS) Checking Vault initialization status ..."
-	@until [ $$(vault status | grep "Initialized" | awk '{print $$2}') = "true" ] ; do sleep 1 ; printf . ; done
+	@until [ $$(VAULT_ADDR=https://127.0.0.1:8200 vault status | grep "Initialized" | awk '{print $$2}') = "true" ] ; do sleep 1 ; printf . ; done
 	@echo 'Done.'
 
 clean:
