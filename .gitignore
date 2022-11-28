@@ -1,6 +1,9 @@
+.devenv
+.devenv.flake.nix
 .terraform
 .terraform.lock.hcl
 .vaultini1_init
+devenv.lock
 terraform.tfstate
 terraform.tfstate.backup
 containers/vaultini?/data/*
