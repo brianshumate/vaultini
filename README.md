@@ -55,7 +55,7 @@ There are just a handful of steps to make your own Vaultini.
         ./containers/vaultini1/certs/vaultini-ca.pem
      ```
 
-       - You will be prompted for your user password; enter it to add the certificate.
+       - You will be prompted for your user password and in some cases will be prompted twice; enter your user password to add the certificate.
 
    - For Linux:
 

@@ -1,0 +1,107 @@
+# Self-Signed TLS Details
+
+The TLS certificates and keys used by Vaultini are self-signed and were generated with the Vault PKI secrets engine based on the guidance in the [Build Your Own Certificate Authority (CA)](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine) tutorial.
+
+Here are the exact commands used to generate the current set.
+
+## Root CA
+
+```shell
+vault secrets enable pki
+```
+
+```shell
+vault secrets tune -max-lease-ttl=87600h pki
+```
+
+```shell
+vault write -field=certificate pki/root/generate/internal \
+     common_name="vaultini.lan" \
+     issuer_name="root-2023" \
+     ttl=87600h > root_2023_ca.crt
+```
+
+```shell
+vault write pki/roles/2023-servers allow_any_name=true
+```
+
+```shell
+vault write pki/config/urls \
+     issuing_certificates="$VAULT_ADDR/v1/pki/ca" \
+     crl_distribution_points="$VAULT_ADDR/v1/pki/crl"
+```
+
+## Intermediate CA
+
+```shell
+vault secrets enable -path=pki_int pki
+```
+
+```shell
+vault secrets tune -max-lease-ttl=43800h pki_int
+```
+
+```shell
+vault write -format=json pki_int/intermediate/generate/internal \
+     common_name="vaultini.lan Intermediate Authority" \
+     issuer_name="vaultini-dot-lan-intermediate" \
+     | jq -r '.data.csr' > pki_intermediate.csr
+```
+
+```shell
+vault write -format=json pki/root/sign-intermediate \
+     issuer_ref="root-2023" \
+     csr=@pki_intermediate.csr \
+     format=pem_bundle ttl="43800h" \
+     | jq -r '.data.certificate' > intermediate.cert.pem
+```
+
+```shell
+vault write pki_int/roles/vaultini-dot-lan \
+     issuer_ref="$(vault read -field=default pki_int/config/issuers)" \
+     allowed_domains="vaultini.lan" \
+     allow_subdomains=true \
+     max_ttl="8760h"
+```
+
+## Certificates and Keys
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="vaultini1.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.101" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="vaultini2.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.102" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="vaultini3.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.103" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="vaultini4.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.104" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="vaultini5.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.105" \
+    ttl="8760h"
+```
