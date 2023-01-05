@@ -55,7 +55,7 @@ There are just a handful of steps to make your own Vaultini.
         ./containers/vaultini1/certs/vaultini-ca.pem
      ```
 
-       - You will be prompted for your user password and in some cases will be prompted twice; enter your user password to add the certificate.
+       - You will be prompted for your user password and sometimes could be prompted twice; enter your user password to add the certificate.
 
    - For Linux:
 
@@ -205,7 +205,7 @@ To remove the CA certificate from your OS trust store:
 
 ### Notes
 
-The following notes should help you to better understand the container structure used by Vaultini along with tips on commonly used features like specifying the Vault version to use, and more.
+The following notes should help you better understand the container structure Vaultini uses, along with tips on commonly used features.
 
 #### Configuration, data & logs
 
