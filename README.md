@@ -43,14 +43,14 @@ There are just a handful of steps to make your own Vaultini.
 
 1. Clone this repository.
 
-2. `cd vaultini`
+1. `cd vaultini`
 
-3. Add the Vaultini Certificate Authority certificate to your operating system trust store:
+1. Add the Vaultini Certificate Authority certificate to your operating system trust store:
 
    - For macOS:
 
      ```shell
-     $ sudo security add-trusted-cert -d -r trustAsRoot \
+     sudo security add-trusted-cert -d -r trustAsRoot \
         -k /Library/Keychains/System.keychain \
         ./containers/vaultini1/certs/vaultini-ca.pem
      ```
@@ -64,7 +64,7 @@ There are just a handful of steps to make your own Vaultini.
         Update the package cache and install the `ca-certificates` package.
 
         ```shell
-        $ sudo apk update && sudo apk add ca-certificates
+        sudo apk update && sudo apk add ca-certificates
         fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/main/aarch64/APKINDEX.tar.gz
         fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/community/aarch64/APKINDEX.tar.gz
         v3.14.8-86-g0df2022316 [https://dl-cdn.alpinelinux.org/alpine/v3.14/main]
@@ -76,7 +76,7 @@ There are just a handful of steps to make your own Vaultini.
         From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
 
         ```shell
-        $ sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
+        sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
             /usr/local/share/ca-certificates/vaultini-ca.crt
         # No output expected
         ```
@@ -84,14 +84,14 @@ There are just a handful of steps to make your own Vaultini.
         Append the certificates to the file `/etc/ssl/certs/ca-certificates.crt`.
 
         ```shell
-        $ sudo sh -c "cat /usr/local/share/ca-certificates/vaultini-ca.crt >> /etc/ssl/certs/ca-certificates.crt"
+        sudo sh -c "cat /usr/local/share/ca-certificates/vaultini-ca.crt >> /etc/ssl/certs/ca-certificates.crt"
         # No output expected
         ```
 
         Update certificates.
 
         ```shell
-        $ sudo sudo update-ca-certificates
+        sudo sudo update-ca-certificates
         # No output expected
         ```
 
@@ -100,7 +100,7 @@ There are just a handful of steps to make your own Vaultini.
         Install the `ca-certificates` package.
 
         ```shell
-        $ sudo apt-get install -y ca-certificates
+        sudo apt-get install -y ca-certificates
          Reading package lists... Done
          ...snip...
          Updating certificates in /etc/ssl/certs...
@@ -112,7 +112,7 @@ There are just a handful of steps to make your own Vaultini.
        Copy the Vaultini CA certificate to `/usr/local/share/ca-certificates`.
 
        ```shell
-       $ sudo cp containers/vaultini1/certs/vaultini-ca.pem \
+       sudo cp containers/vaultini1/certs/vaultini-ca.pem \
            /usr/local/share/ca-certificates/vaultini-ca.crt
        # No output expected
        ```
@@ -120,7 +120,7 @@ There are just a handful of steps to make your own Vaultini.
        Update certificates.
 
        ```shell
-       $ sudo update-ca-certificates
+       sudo update-ca-certificates
        Updating certificates in /etc/ssl/certs...
        1 added, 0 removed; done.
        Running hooks in /etc/ca-certificates/update.d...
@@ -132,7 +132,7 @@ There are just a handful of steps to make your own Vaultini.
        From within this repository directory, copy the Vaultini CA certificate to the `/etc/pki/ca-trust/source/anchors` directory.
 
         ```shell
-        $ sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
+        sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
             /etc/pki/ca-trust/source/anchors/vaultini-ca.crt
         # No output expected
         ```
@@ -140,14 +140,14 @@ There are just a handful of steps to make your own Vaultini.
         Update CA trust.
 
         ```shell
-        $ sudo update-ca-trust
+        sudo update-ca-trust
         # No output expected
         ```
 
        From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
 
         ```shell
-        $ sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
+        sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
             /usr/local/share/ca-certificates/vaultini-ca.crt
         # No output expected
         ```
@@ -155,11 +155,11 @@ There are just a handful of steps to make your own Vaultini.
         Update certificates.
 
         ```shell
-        $ sudo update-ca-certificates
+        sudo update-ca-certificates
         # No output expected
         ```
 
-4. Type `make` and press `[return]`; successful output resembles this example and includes the initial root token value for the sake of convenience and ease of use:
+1. Type `make` and press `[return]`; successful output resembles this example, and includes the initial root token value (for the sake of convenience and ease of use):
 
    ```plaintext
    [vaultini] Initializing Terraform workspace ...Done.
@@ -172,7 +172,7 @@ There are just a handful of steps to make your own Vaultini.
    [vaultini] Login to Vault with initial root token: vault login hvs.E5DA1IvLTq9y1q8p1Oc0ff33
    ```
 
-5. Follow the instructions to set an appropriate `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
+1. Follow the instructions to set an appropriate `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
 
 ### Cleanup
 
@@ -193,7 +193,7 @@ To remove the CA certificate from your OS trust store:
 - For macOS:
 
   ```shell
-  $ sudo security delete-certificate -c "vaultini Intermediate Authority"
+  sudo security delete-certificate -c "vaultini Intermediate Authority"
   # no output expected
   ```
 
