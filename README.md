@@ -1,18 +1,16 @@
 # Vaultini
 
 ```plaintext
-  ooooo  oooo                    o888   o8   o88               o88
-   888    88 ooooooo oooo  oooo   888 o888oo oooo  oo oooooo   oooo
-    888  88  ooooo888 888   888   888  888    888   888   888   888
-     88888 888    888 888   888   888  888    888   888   888   888
-      888   88ooo88 8o 888o88 8o o888o  888o o888o o888o o888o o888o
-
-oooo8oooo8oooo8oooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8oooo8ooo
-
+ __  __                     ___    __                       
+/\ \/\ \                   /\_ \  /\ \__  __          __    
+\ \ \ \ \     __     __  __\//\ \ \ \ ,_\/\_\    ___ /\_\   
+ \ \ \ \ \  /'__`\  /\ \/\ \ \ \ \ \ \ \/\/\ \ /' _ `\/\ \  
+  \ \ \_/ \/\ \L\.\_\ \ \_\ \ \_\ \_\ \ \_\ \ \/\ \/\ \ \ \ 
+   \ `\___/\ \__/.\_\\ \____/ /\____\\ \__\\ \_\ \_\ \_\ \_\
+    `\/__/  \/__/\/_/ \/___/  \/____/ \/__/ \/_/\/_/\/_/\/_/
+                                                            
 Vaultini is a minimal Vault cluster Terraformed onto Docker containers.
 It is useful for development and testing, but not for production.
-
-oooo8oooo8oooo8oooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8ooooo8oooo8ooo
 ```
 
 ## What?
