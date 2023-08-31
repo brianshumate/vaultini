@@ -15,7 +15,7 @@ It is useful for development and testing, but not for production.
 
 ## What?
 
-Vaultini is a minimal 5-node [Vault](https://www.vaultproject.io) cluster running the official [OSS Docker image](https://hub.docker.com/_/vault/) with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) on [Docker](https://www.docker.com/products/docker-desktop/). It is powered by a `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs).
+Vaultini is a minimal 5-node [Vault](https://www.vaultproject.io) cluster running the official [Vault Docker image](https://hub.docker.com/_/vault/) with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) on [Docker](https://www.docker.com/products/docker-desktop/). It is powered by a `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs).
 
 ## Why?
 
@@ -241,6 +241,8 @@ TF_VAR_vault_version=1.11.0 make
 > **Tip**: Vault versions >= 1.11.0 are recommended for ideal Integrated Storage support.
 
 #### Run Vault Enterprise
+
+Vaultini runs the Vault community edition by default, but you can also run the Enterprise edition.
 
 > **NOTE**: You must have an [Enterprise license](https://www.hashicorp.com/products/vault/pricing) to run the Vault Enterprise image.
 
