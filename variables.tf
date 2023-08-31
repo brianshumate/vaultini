@@ -19,6 +19,16 @@ variable "vault_version" {
     default = "1.14.1"
 }
 
+# Set TF_VAR_vault_edition to override this
+variable "vault_edition" {
+    default = "vault"
+}
+
+# Set TF_VAR_vault_license to override this
+variable "vault_license" {
+    default = "https://www.hashicorp.com/products/vault/pricing"
+}
+
 # Set TF_VAR_vault_log_level to override this
 variable "vault_log_level" {
     default = "info"

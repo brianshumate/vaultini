@@ -238,7 +238,29 @@ Vaultini tries to keep current and offer the latest available Vault Docker image
 TF_VAR_vault_version=1.11.0 make
 ```
 
-> **Tip**: Versions >= 1.11.0 are recommended for ideal Integrated Storage support.
+> **Tip**: Vault versions >= 1.11.0 are recommended for ideal Integrated Storage support.
+
+#### Run Vault Enterprise
+
+> **NOTE**: You must have an [Enterprise license](https://www.hashicorp.com/products/vault/pricing) to run the Vault Enterprise image.
+
+Export the `TF_VAR_vault_license` environment variable with your Vault Enterprise license string as the value. For example:
+
+```shell
+export TF_VAR_vault_license=02E2VCBORGUIRSVJVCECNSNI...
+```
+
+Export the `TF_VAR_vault_edition` environment variable to specify `vault-enterprise` as the value.
+
+```shell
+export TF_VAR_vault_edition=vault-enterprise
+```
+
+Make Vaultini
+
+```shell
+make
+```
 
 #### Set the Vault server log level
 
