@@ -1,14 +1,14 @@
 # Vaultini
 
 ```plaintext
- __  __                     ___    __                       
-/\ \/\ \                   /\_ \  /\ \__  __          __    
-\ \ \ \ \     __     __  __\//\ \ \ \ ,_\/\_\    ___ /\_\   
- \ \ \ \ \  /'__`\  /\ \/\ \ \ \ \ \ \ \/\/\ \ /' _ `\/\ \  
-  \ \ \_/ \/\ \L\.\_\ \ \_\ \ \_\ \_\ \ \_\ \ \/\ \/\ \ \ \ 
+ __  __                     ___    __
+/\ \/\ \                   /\_ \  /\ \__  __          __
+\ \ \ \ \     __     __  __\//\ \ \ \ ,_\/\_\    ___ /\_\
+ \ \ \ \ \  /'__`\  /\ \/\ \ \ \ \ \ \ \/\/\ \ /' _ `\/\ \
+  \ \ \_/ \/\ \L\.\_\ \ \_\ \ \_\ \_\ \ \_\ \ \/\ \/\ \ \ \
    \ `\___/\ \__/.\_\\ \____/ /\____\\ \__\\ \_\ \_\ \_\ \_\
     `\/__/  \/__/\/_/ \/___/  \/____/ \/__/ \/_/\/_/\/_/\/_/
-                                                            
+
 Vaultini is a minimal Vault cluster Terraformed onto Docker containers.
 It is useful for development and testing, but not for production.
 ```
@@ -29,9 +29,17 @@ You can make your own Vaultini with Docker, Terraform, and the Terraform Docker 
 
 To make a Vaultini, your host computer must have the following software installed:
 
+- Linux or macOS (Vaultini is untested on Windows)
+
 - [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.14.0 on macOS version 12.6.1)
 
+- [git](https://git-scm.com)
+
+- BSD make or [gnumake](https://www.gnu.org/software/make/); the Vaultini user interface is a `Makefile`. The former is typically preinstalled, while you usually install the former with your OS package manager.
+
 - [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.5 darwin_arm64 on macOS version 12.6.1)
+
+- [Vault](https://releases.hashicorp.com/vault) while not strictly necessary, you can use the Vault CLI as client to Vaultini instead of a `docker exec` based solution.
 
 > **NOTE:** Vaultini is currently known to function on Linux (last tested on Ubuntu 22.04) and macOS with Intel or Apple silicon processors.
 
