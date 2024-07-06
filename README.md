@@ -15,11 +15,13 @@ It is useful for development and testing, but not for production.
 
 ## What?
 
-Vaultini is a minimal 5-node [Vault](https://www.vaultproject.io) cluster running the official [Vault Docker image](https://hub.docker.com/_/vault/) with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) on [Docker](https://www.docker.com/products/docker-desktop/). It is powered by a `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs).
+Vaultini builds and runs a minimal 5-node [Vault](https://www.vaultproject.io) cluster running the official [Vault Docker image](https://hub.docker.com/_/vault/) with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) on [Docker](https://www.docker.com/products/docker-desktop/).
+
+A `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs) power the project.
 
 ## Why?
 
-To quickly establish a containerized Vault cluster with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) for development, education, and testing.
+Vaultini can quickly establish a containerized Vault cluster with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) for development, education, and testing.
 
 ## How?
 
@@ -29,31 +31,31 @@ You can make your own Vaultini with Docker, Terraform, and the Terraform Docker 
 
 To make a Vaultini, your host computer must have the following software installed:
 
-- Linux or macOS (Vaultini is untested on Windows)
+- Linux or macOS (not tested on Windows)
 
-- [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.14.0 on macOS version 12.6.1)
+- [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.31.0 on macOS version 14.5)
 
 - [git](https://git-scm.com)
 
-- BSD make or [gnumake](https://www.gnu.org/software/make/); the Vaultini user interface is a `Makefile`. The former is typically preinstalled, while you usually install the former with your OS package manager.
+- BSD make or [gnumake](https://www.gnu.org/software/make/)
 
-- [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.3.5 darwin_arm64 on macOS version 12.6.1)
+- [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) binary installed in your system PATH (tested with version 1.6.3 darwin_arm64)
 
-- [Vault](https://releases.hashicorp.com/vault) while not strictly necessary, you can use the Vault CLI as client to Vaultini instead of a `docker exec` based solution.
+- [Vault](https://releases.hashicorp.com/vault) You can use the Vault CLI as client to Vaultini instead of `docker exec vault ...`.
 
-> **NOTE:** Vaultini is currently known to function on Linux (last tested on Ubuntu 22.04) and macOS with Intel or Apple silicon processors.
+> **NOTE:** Vaultini works with Linux (tested on Ubuntu 22.04) and macOS with Intel or Apple silicon processors.
 
 ### Make your own Vaultini
 
-There are just a handful of steps to make your own Vaultini.
+Follow these steps to make your own Vaultini.
 
 1. Clone this repository.
 
 1. `cd vaultini`
 
-1. Add the Vaultini Certificate Authority certificate to your operating system trust store:
+1. Add the Vaultini Certificate Authority to your OS:
 
-   - For macOS:
+   - **For macOS**
 
      ```shell
      sudo security add-trusted-cert -d -r trustAsRoot \
@@ -61,58 +63,37 @@ There are just a handful of steps to make your own Vaultini.
         ./containers/vaultini1/certs/vaultini-ca.pem
      ```
 
-       - You will be prompted for your user password and sometimes could be prompted twice; enter your user password to add the certificate.
+       - The `sudo` command prompts for your user password and sometimes prompts twice; enter your user password to add the certificate.
 
-   - For Linux:
+   - **For Linux**
 
-     - **Alpine**
+     - Alpine Linux
 
-        Update the package cache and install the `ca-certificates` package.
+       - Update the package cache and install the `ca-certificates` package.
 
-        ```shell
-        sudo apk update && sudo apk add ca-certificates
-        fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/main/aarch64/APKINDEX.tar.gz
-        fetch https://dl-cdn.alpinelinux.org/alpine/v3.14/community/aarch64/APKINDEX.tar.gz
-        v3.14.8-86-g0df2022316 [https://dl-cdn.alpinelinux.org/alpine/v3.14/main]
-        v3.14.8-86-g0df2022316 [https://dl-cdn.alpinelinux.org/alpine/v3.14/community]
-        OK: 14832 distinct packages available
-        OK: 9 MiB in 19 packages
-        ```
+          ```shell
+          sudo apk update && sudo apk add ca-certificates
+          ```
 
-        From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
+        - From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
 
-        ```shell
-        sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
-            /usr/local/share/ca-certificates/vaultini-ca.crt
-        # No output expected
-        ```
+          ```shell
+          sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
+              /usr/local/share/ca-certificates/vaultini-ca.crt
+          ```
 
-        Append the certificates to the file `/etc/ssl/certs/ca-certificates.crt`.
+        - Update the certificates database.
 
-        ```shell
-        sudo sh -c "cat /usr/local/share/ca-certificates/vaultini-ca.crt >> /etc/ssl/certs/ca-certificates.crt"
-        # No output expected
-        ```
+          ```shell
+          sudo sudo update-ca-certificates
+          ```
 
-        Update certificates.
-
-        ```shell
-        sudo sudo update-ca-certificates
-        # No output expected
-        ```
-
-     - **Debian & Ubuntu**
+     - Debian & Ubuntu
 
         Install the `ca-certificates` package.
 
         ```shell
-        sudo apt-get install -y ca-certificates
-         Reading package lists... Done
-         ...snip...
-         Updating certificates in /etc/ssl/certs...
-         0 added, 0 removed; done.
-         Running hooks in /etc/ca-certificates/update.d...
-         done.
+        sudo apt install -y ca-certificates
         ```
 
        Copy the Vaultini CA certificate to `/usr/local/share/ca-certificates`.
@@ -120,34 +101,27 @@ There are just a handful of steps to make your own Vaultini.
        ```shell
        sudo cp containers/vaultini1/certs/vaultini-ca.pem \
            /usr/local/share/ca-certificates/vaultini-ca.crt
-       # No output expected
        ```
 
        Update certificates.
 
        ```shell
        sudo update-ca-certificates
-       Updating certificates in /etc/ssl/certs...
-       1 added, 0 removed; done.
-       Running hooks in /etc/ca-certificates/update.d...
-       done.
        ```
 
-     - **RHEL**
+     - RHEL
 
        From within this repository directory, copy the Vaultini CA certificate to the `/etc/pki/ca-trust/source/anchors` directory.
 
         ```shell
         sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
             /etc/pki/ca-trust/source/anchors/vaultini-ca.crt
-        # No output expected
         ```
 
         Update CA trust.
 
         ```shell
         sudo update-ca-trust
-        # No output expected
         ```
 
        From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
@@ -155,14 +129,12 @@ There are just a handful of steps to make your own Vaultini.
         ```shell
         sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
             /usr/local/share/ca-certificates/vaultini-ca.crt
-        # No output expected
         ```
 
         Update certificates.
 
         ```shell
         sudo update-ca-certificates
-        # No output expected
         ```
 
 1. Type `make` and press `[return]`; successful output resembles this example, and includes the initial root token value (for the sake of convenience and ease of use):
@@ -200,10 +172,9 @@ To remove the CA certificate from your OS trust store:
 
   ```shell
   sudo security delete-certificate -c "vaultini Intermediate Authority"
-  # no output expected
   ```
 
-  - You will be prompted for your user password; enter it to add the certificate.
+  - The `sudo` command will prompt you for your user password; enter your user password to add the certificate.
 
 - For Linux:
 
@@ -211,11 +182,11 @@ To remove the CA certificate from your OS trust store:
 
 ### Notes
 
-The following notes should help you better understand the container structure Vaultini uses, along with tips on commonly used features.
+The following notes describe the container structure Vaultini uses, provide some tips on common features.
 
 #### Configuration, data & logs
 
-The configuration, data, and audit device log files live in a subdirectory under `containers` that is named after the server. For example, here is the structure of the first server, _vaultini1_ as it appears when active.
+The configuration, data, and audit device log files live in a subdirectory under `containers` named for the server. For example, the first server, _vaultini1_ has a directory and file structure like the following when active.
 
 ```shell
 $ tree containers/vaultini1
@@ -240,19 +211,20 @@ containers/vaultini1
 
 #### Run a specific Vault version
 
-Vaultini tries to keep current and offer the latest available Vault Docker image version, but you can also run a specific version of Vault with the `TF_VAR_vault_version` environment variable like this:. 
+Vaultini tries to keep current and offer the latest available Vault Docker image version, but you can also run a specific version of Vault with the `TF_VAR_vault_version` environment variable.
 
 ```shell
 TF_VAR_vault_version=1.11.0 make
 ```
 
-> **Tip**: Vault versions >= 1.11.0 are recommended for ideal Integrated Storage support.
+> **Tip**: Use Vault versions >= 1.11.0 for ideal Integrated Storage support.
 
 #### Run Vault Enterprise
 
-Vaultini runs the Vault community edition by default, but you can also run the Enterprise edition.
+Vaultini runs the Vault Community Edition by default, but you can also run the Enterprise edition.
 
-> **NOTE**: You must have an [Enterprise license](https://www.hashicorp.com/products/vault/pricing) to run the Vault Enterprise image.
+> **NOTE**:
+> You must have an [Enterprise license](https://www.hashicorp.com/products/vault/pricing) to run the Vault Enterprise image.
 
 Export the `TF_VAR_vault_license` environment variable with your Vault Enterprise license string as the value. For example:
 
@@ -284,15 +256,13 @@ TF_VAR_vault_log_level=Debug make
 
 A great resource for learning more about Vault is the [HashiCorp Developer](https://developer.hashicorp.com) site, which has a nice [Vault tutorial library](https://developer.hashicorp.com/tutorials/library?product=vault) available.
 
-If you are completely new to Vault, check out the Get Started series:
+If you are new to Vault, check out the Get Started series:
 
 - [CLI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started)
 - [HCP Vault Quick Start](https://developer.hashicorp.com/vault/tutorials/cloud)
 - [UI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started-ui)
 
-The tutorial library also has a wide range of intermediate and advanced tutorials with integrated hands on labs.
-
-Be sure to explore them all!
+The tutorial library also has a wide range of intermediate and advanced tutorials with integrated hands on labs for you to explore.
 
 ## Who?
 
