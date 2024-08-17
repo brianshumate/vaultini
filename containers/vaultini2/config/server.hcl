@@ -1,7 +1,8 @@
-disable_mlock = true
-ui            = true
-api_addr      = "https://10.1.42.102:8200"
-cluster_addr  = "https://10.1.42.102:8201"
+disable_mlock    = true
+ui               = true
+api_addr         = "https://10.1.42.102:8200"
+cluster_addr     = "https://10.1.42.102:8201"
+plugin_directory = "/vault/plugins"
 
 listener "tcp" {
   address            = "0.0.0.0:8200"
