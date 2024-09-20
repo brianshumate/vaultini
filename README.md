@@ -8,20 +8,21 @@
   \ \ \_/ \/\ \L\.\_\ \ \_\ \ \_\ \_\ \ \_\ \ \/\ \/\ \ \ \
    \ `\___/\ \__/.\_\\ \____/ /\____\\ \__\\ \_\ \_\ \_\ \_\
     `\/__/  \/__/\/_/ \/___/  \/____/ \/__/ \/_/\/_/\/_/\/_/
+```
 
 Vaultini is a minimal Vault cluster Terraformed onto Docker containers.
-It is useful for development and testing, but not for production.
-```
+
+You can use Vaultini for development and testing, but you shouldn't use it for production use cases.
 
 ## What?
 
-Vaultini builds and runs a minimal 5-node [Vault](https://www.vaultproject.io) cluster running the official [Vault Docker image](https://hub.docker.com/_/vault/) with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) on [Docker](https://www.docker.com/products/docker-desktop/).
+Vaultini builds and runs a minimally configured 5-node [Vault](https://www.vaultproject.io) cluster on the official [Vault Docker image](https://hub.docker.com/_/vault/) with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) on [Docker](https://www.docker.com/products/docker-desktop/).
 
-A `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs) power the project.
+A `Makefile`, [Terraform CLI](https://developer.hashicorp.com/terraform/cli), and the [Terraform Docker Provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs) power the project, and bootstraps the cluster.
 
 ## Why?
 
-Vaultini can quickly establish a containerized Vault cluster with [Integrated Storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft) for development, education, and testing.
+Vaultini can quickly establish a containerized Vault cluster useful for development, education, and testing. The cluster is fully initialized, joined, and unsealed; once provisioned, you can immediately start using it.
 
 ## How?
 
@@ -29,9 +30,9 @@ You can make your own Vaultini with Docker, Terraform, and the Terraform Docker 
 
 ### Prerequisites
 
-To make a Vaultini, your host computer must have the following software installed:
+To make a Vaultini, you need the following:
 
-- Linux or macOS (not tested on Windows)
+- Linux or macOS
 
 - [Docker](https://www.docker.com/products/docker-desktop/) (tested with Docker Desktop version 4.31.0 on macOS version 14.5)
 
@@ -53,7 +54,7 @@ Follow these steps to make your own Vaultini.
 
 1. `cd vaultini`
 
-1. Add the Vaultini Certificate Authority to your OS:
+1. Add the Vaultini Certificate Authority to your OS trust store:
 
    - **For macOS**
 
@@ -109,7 +110,7 @@ Follow these steps to make your own Vaultini.
        sudo update-ca-certificates
        ```
 
-     - RHEL
+     - Red Hat Enterprise Linux
 
        From within this repository directory, copy the Vaultini CA certificate to the `/etc/pki/ca-trust/source/anchors` directory.
 
@@ -137,7 +138,7 @@ Follow these steps to make your own Vaultini.
         sudo update-ca-certificates
         ```
 
-1. Type `make` and press `[return]`; successful output resembles this example, and includes the initial root token value (for the sake of convenience and ease of use):
+1. Type `make` and press `[return]`; successful output resembles this example, and includes the initial root token value for the sake of convenience and ease of use:
 
    ```plaintext
    [vaultini] Initializing Terraform workspace ...Done.
@@ -174,7 +175,7 @@ To remove the CA certificate from your OS trust store:
   sudo security delete-certificate -c "vaultini Intermediate Authority"
   ```
 
-  - The `sudo` command will prompt you for your user password; enter your user password to add the certificate.
+  - The `sudo` command prompts for your user password; enter your user password to add the certificate.
 
 - For Linux:
 
@@ -189,7 +190,12 @@ The following notes describe the container structure Vaultini uses, provide some
 The configuration, data, and audit device log files live in a subdirectory under `containers` named for the server. For example, the first server, _vaultini1_ has a directory and file structure like the following when active.
 
 ```shell
-$ tree containers/vaultini1
+tree containers/vaultini1
+```
+
+Example output:
+
+```plaintext
 containers/vaultini1
 ├── certs
 │   ├── server-cert.pem
