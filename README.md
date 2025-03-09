@@ -1,15 +1,5 @@
 # Vaultini
 
-```plaintext
- __  __                     ___    __
-/\ \/\ \                   /\_ \  /\ \__  __          __
-\ \ \ \ \     __     __  __\//\ \ \ \ ,_\/\_\    ___ /\_\
- \ \ \ \ \  /'__`\  /\ \/\ \ \ \ \ \ \ \/\/\ \ /' _ `\/\ \
-  \ \ \_/ \/\ \L\.\_\ \ \_\ \ \_\ \_\ \ \_\ \ \/\ \/\ \ \ \
-   \ `\___/\ \__/.\_\\ \____/ /\____\\ \__\\ \_\ \_\ \_\ \_\
-    `\/__/  \/__/\/_/ \/___/  \/____/ \/__/ \/_/\/_/\/_/\/_/
-```
-
 Vaultini is a minimal Vault cluster Terraformed onto Docker containers.
 
 You can use Vaultini for development and testing, but you shouldn't use it for production use cases.
@@ -76,14 +66,14 @@ Follow these steps to make your own Vaultini.
           sudo apk update && sudo apk add ca-certificates
           ```
 
-        - From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
+       - From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
 
           ```shell
           sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
               /usr/local/share/ca-certificates/vaultini-ca.crt
           ```
 
-        - Update the certificates database.
+       - Update the certificates database.
 
           ```shell
           sudo sudo update-ca-certificates
