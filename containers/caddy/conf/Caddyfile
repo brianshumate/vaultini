@@ -1,0 +1,32 @@
+localhost:8443 {
+	tls /etc/caddy/server-cert.pem /etc/caddy/server-key.pem
+	reverse_proxy {
+		# Forward to all Vault nodes
+		to 10.1.42.101:8200 10.1.42.102:8200 10.1.42.103:8200 10.1.42.104:8200 10.1.42.105:8200
+
+		# Health check to identify the active node
+		health_path /v1/sys/health
+		health_interval 5s
+
+		# Only route to the active node (status 200)
+		health_status 200
+
+		# Load balancing policy
+		lb_policy first
+
+		# Preserve the Host header
+		header_up Host {host}
+
+		# Timeout settings
+		transport http {
+			keepalive 30s
+			tls_insecure_skip_verify
+		}
+	}
+
+	# Log requests
+	log {
+		output file /var/log/caddy/vault-access.log
+		format json
+	}
+}

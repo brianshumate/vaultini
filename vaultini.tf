@@ -13,14 +13,13 @@
 # -----------------------------------------------------------------------
 # Provider configuration
 # -----------------------------------------------------------------------
-
 provider "docker" {
   host = var.docker_host
 }
+
 # -----------------------------------------------------------------------
 # Docker network
 # -----------------------------------------------------------------------
-
 resource "docker_network" "vaultini_network" {
   name            = "vaultini_network"
   attachable      = true
@@ -31,18 +30,69 @@ resource "docker_network" "vaultini_network" {
 }
 
 # -----------------------------------------------------------------------
+# Caddy image
+# -----------------------------------------------------------------------
+resource "docker_image" "caddy" {
+  name         = "caddy:latest"
+  keep_locally = true
+}
+
+# -----------------------------------------------------------------------
 # Vault image
 # -----------------------------------------------------------------------
-
 resource "docker_image" "vault" {
   name         = "hashicorp/${var.vault_edition}:latest"
   keep_locally = true
 }
 
 # -----------------------------------------------------------------------
+# Caddy container resources
+# -----------------------------------------------------------------------
+resource "docker_container" "caddy" {
+  name     = "loadbalancer"
+  hostname = "loadbalancer.vaultini.lan"
+  env      =  []
+  command = []
+  image    = docker_image.caddy.repo_digest
+  must_run = true
+  rm       = false
+
+  # capabilities {
+  #   add = ["NET_ADMIN"]
+  # }
+
+  networks_advanced {
+    #name         = docker_network.vaultini_network.name
+    name         = "vaultini_network"
+    ipv4_address = "10.1.42.10"
+  }
+
+  ports {
+    internal = 8443
+    external = 8443
+    protocol = "tcp"
+  }
+
+  volumes {
+    host_path      = "${path.cwd}/containers/caddy/conf"
+    container_path = "/etc/caddy"
+  }
+
+  volumes {
+    host_path      = "${path.cwd}/containers/caddy/data"
+    container_path = "/data"
+  }
+
+  volumes {
+    host_path      = "${path.cwd}/containers/caddy/logs"
+    container_path = "/var/log/caddy"
+  }
+
+}
+
+# -----------------------------------------------------------------------
 # Vault container resources
 # -----------------------------------------------------------------------
-
 locals {
   vault_containers = {
     "vaultini1" = { ipv4_address = "10.1.42.101", env = ["SKIP_CHOWN", "VAULT_LICENSE=${var.vault_license}", "VAULT_CLUSTER_ADDR=https://10.1.42.101:8201", "VAULT_REDIRECT_ADDR=https://10.1.42.101:8200", "VAULT_CACERT=/vault/certs/vaultini-ca.pem"], internal_port = "8200", external_port = "8200", host_path_certs = "${path.cwd}/containers/vaultini1/certs", host_path_config = "${path.cwd}/containers/vaultini1/config", host_path_data = "${path.cwd}/containers/vaultini1/data", host_path_logs = "${path.cwd}/containers/vaultini1/logs", host_path_plugins = "${path.cwd}/containers/vaultini1/plugins" },
@@ -67,7 +117,7 @@ resource "docker_container" "vaultini" {
   ]
   image    = docker_image.vault.repo_digest
   must_run = true
-  rm       = true
+  rm       = false
 
   capabilities {
     add = ["IPC_LOCK", "SYSLOG"]
@@ -83,6 +133,7 @@ resource "docker_container" "vaultini" {
 
   networks_advanced {
     name         = docker_network.vaultini_network.name
+    # name         = "vaultini_network"
     ipv4_address = each.value.ipv4_address
   }
 

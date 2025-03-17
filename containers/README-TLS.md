@@ -2,6 +2,13 @@
 
 The TLS certificates and keys used by Vaultini are self-signed and were generated with the Vault PKI secrets engine based on the guidance in the [Build Your Own Certificate Authority (CA)](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine) tutorial.
 
+You can use the script `containers/bin/generate-tls` to regenerate new TLS material for the project. This script requires a running Vault dev mode server with VAULT_ADDR=http://localhost:8200 and VAULT_TOKEN=root. It does the following:
+
+- Creates a root certificate authority (CA)
+- Creates an intermediate CA signed by the root CA
+- Creates certificates and keys for Vault nodes and extras
+- Installs the certificates and keys into each container filesystem
+
 Here are the exact commands used to generate the current set.
 
 ## Root CA
@@ -112,5 +119,29 @@ vault write pki_int/issue/vaultini-dot-lan \
     alt_names="localhost" \
     common_name="vaultini5.vaultini.lan" \
     ip_sans="127.0.0.1,10.1.42.105" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="loadbalancer.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.10" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="prometheus.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.211" \
+    ttl="8760h"
+```
+
+```shell
+vault write pki_int/issue/vaultini-dot-lan \
+    alt_names="localhost" \
+    common_name="grafana.vaultini.lan" \
+    ip_sans="127.0.0.1,10.1.42.212" \
     ttl="8760h"
 ```

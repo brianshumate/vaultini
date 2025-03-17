@@ -11,7 +11,8 @@ default: all
 all: prerequisites provision vault_status unseal_nodes audit_device done
 
 done:
-	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200"
+	@echo "$(MY_NAME_IS) Export VAULT_ADDR for the load balancer : export VAULT_ADDR=https://localhost:8443"
+	@echo "$(MY_NAME_IS) Unseal key for nodes: $(UNSEAL_KEY)"
 	@echo "$(MY_NAME_IS) Login to Vault with initial root token: vault login $$(grep 'Initial Root Token' ./.vaultini1_init | awk '{print $$NF}')"
 
 DOCKER_OK=$$(docker info > /dev/null 2>&1; printf $$?)
