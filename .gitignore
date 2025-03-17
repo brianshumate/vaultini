@@ -9,3 +9,4 @@ terraform.tfstate.backup
 containers/vaultini?/data/*
 containers/vaultini?/logs/*
 vaultini.log
+vault-access.log

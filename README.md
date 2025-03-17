@@ -2,7 +2,7 @@
 
 Vaultini is a minimal Vault cluster Terraformed onto Docker containers.
 
-You can use Vaultini for development and testing, but you shouldn't use it for production use cases.
+You can use Vaultini for development and testing, but you should **never try to use it for production use cases**.
 
 ## What?
 
@@ -137,11 +137,12 @@ Follow these steps to make your own Vaultini.
    [vaultini] Checking Vault initialization status ...Done.
    [vaultini] Unsealing cluster nodes .....vaultini2. vaultini3. vaultini4. vaultini5. Done.
    [vaultini] Enable audit device ...Done.
-   [vaultini] Export VAULT_ADDR for the active node: export VAULT_ADDR=https://127.0.0.1:8200
-   [vaultini] Login to Vault with initial root token: vault login hvs.E5DA1IvLTq9y1q8p1Oc0ff33
+   [vaultini] Export VAULT_ADDR for the load balancer : export VAULT_ADDR=https://localhost:8443
+   [vaultini] Unseal key for nodes: 3YUzzSnKmc0ff33scy8WrUtbojl/3liGfoDxQ/lEYZs=
+   [vaultini] Login to Vault with initial root token: vault login hvs.cY2NrVSnfhrOvp80F0c0ff33
    ```
 
-1. Follow the instructions to set an appropriate `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
+1. Follow the instructions to set the correct `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
 
 ### Cleanup
 
