@@ -128,7 +128,7 @@ Follow these steps to make your own Vaultini.
         sudo update-ca-certificates
         ```
 
-1. Type `make` and press `[return]`; successful output resembles this example, and includes the initial root token value for the sake of convenience and ease of use:
+2. Type `make` and press `[return]`; successful output resembles this example, and includes the unseal key and initial root token value for convenience:
 
    ```plaintext
    [vaultini] Initializing Terraform workspace ...Done.
@@ -142,7 +142,7 @@ Follow these steps to make your own Vaultini.
    [vaultini] Login to Vault with initial root token: vault login hvs.cY2NrVSnfhrOvp80F0c0ff33
    ```
 
-1. Follow the instructions to set the correct `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
+3. Follow the instructions to set the correct `VAULT_ADDR` environment variable, and login to Vault with the initial root token value.
 
 ### Cleanup
 
