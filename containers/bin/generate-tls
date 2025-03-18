@@ -56,9 +56,9 @@ function generate_root_ca() {
     vault secrets tune -max-lease-ttl=87600h pki
     vault write -field=certificate pki/root/generate/internal \
         common_name="vaultini.lan" \
-        issuer_name="root-2024" \
-        ttl=87600h > root_2024_ca.crt
-    vault write pki/roles/2024-servers \
+        issuer_name="root-2025" \
+        ttl=87600h > root_2025_ca.crt
+    vault write pki/roles/2025-servers \
         allow_any_name=true \
         allow_subdomains=true \
         allow_localhost=true
@@ -77,7 +77,7 @@ function generate_intermediate_ca() {
         issuer_name="vaultini-dot-lan-intermediate" \
         | jq -r '.data.csr' > pki_intermediate.csr
     vault write -format=json pki/root/sign-intermediate \
-        issuer_ref="root-2024" \
+        issuer_ref="root-2025" \
         csr=@pki_intermediate.csr \
         format=pem_bundle ttl="43800h" \
         | jq -r '.data.certificate' > intermediate.cert.pem
@@ -137,7 +137,7 @@ function install_tls() {
 }
 
 function cleanup() {
-    rm -f root_2024_ca.crt pki_intermediate.csr intermediate.cert.pem
+    rm -f root_2025_ca.crt pki_intermediate.csr intermediate.cert.pem
 }
 
 function main() {
