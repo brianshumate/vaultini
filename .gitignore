@@ -6,7 +6,8 @@
 devenv.lock
 terraform.tfstate
 terraform.tfstate.backup
-containers/vaultini?/data/*
-containers/vaultini?/logs/*
+containers/*/data/*
+containers/*/logs/*
 vaultini.log
 containers/caddy/logs/vault-access.log
+
