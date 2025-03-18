@@ -24,12 +24,12 @@ vault secrets tune -max-lease-ttl=87600h pki
 ```shell
 vault write -field=certificate pki/root/generate/internal \
      common_name="vaultini.lan" \
-     issuer_name="root-2024" \
-     ttl=87600h > root_2024_ca.crt
+     issuer_name="root-2025" \
+     ttl=87600h > root_2025_ca.crt
 ```
 
 ```shell
-vault write pki/roles/2024-servers \
+vault write pki/roles/2025-servers \
     allow_any_name=true \
      allow_subdomains=true \
     allow_localhost=true
@@ -60,7 +60,7 @@ vault write -format=json pki_int/intermediate/generate/internal \
 
 ```shell
 vault write -format=json pki/root/sign-intermediate \
-     issuer_ref="root-2024" \
+     issuer_ref="root-2025" \
      csr=@pki_intermediate.csr \
      format=pem_bundle ttl="43800h" \
      | jq -r '.data.certificate' > intermediate.cert.pem
