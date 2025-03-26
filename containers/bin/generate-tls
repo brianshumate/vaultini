@@ -134,6 +134,17 @@ function install_tls() {
     echo "$tls_loadbalancer" | yq '.data.private_key' > ./caddy/conf/server-key.pem
     echo "$tls_loadbalancer" | yq '.data.ca_chain' | grep -v '\- |\-' > ./caddy/conf/vaultini-ca-chain.pem
     echo "$tls_loadbalancer" | yq '.data.issuing_ca' > ./caddy/conf/vaultini-ca.pem
+
+    echo "$tls_prometheus" | yq '.data.certificate' > ./prometheus/certs/server-cert.pem
+    echo "$tls_prometheus" | yq '.data.private_key' > ./prometheus/certs/server-key.pem
+    echo "$tls_prometheus" | yq '.data.ca_chain' | grep -v '\- |\-' > ./prometheus/certs/vault-docker-lab-ca-chain.pem
+    echo "$tls_prometheus" | yq '.data.issuing_ca' > ./prometheus/certs/vault-docker-lab-ca.pem
+
+    echo "$tls_grafana" | yq '.data.certificate' > ./grafana/certs/server-cert.pem
+    echo "$tls_grafana" | yq '.data.private_key' > ./grafana/certs/server-key.pem
+    echo "$tls_grafana" | yq '.data.ca_chain' | grep -v '\- |\-' > ./grafana/certs/vault-docker-lab-ca-chain.pem
+    echo "$tls_tls_grafana" | yq '.data.issuing_ca' > ./grafana/certs/vault-docker-lab-ca.pem
+
 }
 
 function cleanup() {
