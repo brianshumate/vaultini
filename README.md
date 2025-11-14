@@ -235,7 +235,7 @@ Export the `TF_VAR_vault_edition` environment variable to specify `vault-enterpr
 export TF_VAR_vault_edition=vault-enterprise
 ```
 
-Make Vaultini
+Make Vaultini:
 
 ```shell
 make
@@ -249,17 +249,17 @@ The default Vault server log level is Info, but you can specify another log leve
 TF_VAR_vault_log_level=Debug make
 ```
 
-### What next?
+## Next steps
 
-A great resource for learning more about Vault is the [HashiCorp Developer](https://developer.hashicorp.com) site, which has a nice [Vault tutorial library](https://developer.hashicorp.com/tutorials/library?product=vault) available.
+New to Vault and unsure what to do next?
 
-If you are new to Vault, check out the Get Started series:
+- [Get started with Vault foundations](https://developer.hashicorp.com/vault/tutorials/get-started)
 
-- [CLI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started)
-- [HCP Vault Quick Start](https://developer.hashicorp.com/vault/tutorials/cloud)
-- [UI Quick Start](https://developer.hashicorp.com/vault/tutorials/getting-started-ui)
+- Dive into some of the [available tutorials](https://developer.hashicorp.com/tutorials/library?product=vault?ref=BrianShumateDotCom) on the HashiCorp Developer site.
 
-The tutorial library also has a wide range of intermediate and advanced tutorials with integrated hands on labs for you to explore.
+You can  use Vaultini as your dev mode Vault server right now for many of the tutorial scenarios.
+
+Enjoy!
 
 ## Who?
 
