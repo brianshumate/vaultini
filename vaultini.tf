@@ -51,8 +51,8 @@ resource "docker_image" "vault" {
 resource "docker_container" "caddy" {
   name     = "loadbalancer"
   hostname = "loadbalancer.vaultini.lan"
-  env      =  []
-  command = []
+  env      = []
+  command  = []
   image    = docker_image.caddy.repo_digest
   must_run = true
   rm       = false
@@ -132,7 +132,7 @@ resource "docker_container" "vaultini" {
   }
 
   networks_advanced {
-    name         = docker_network.vaultini_network.name
+    name = docker_network.vaultini_network.name
     # name         = "vaultini_network"
     ipv4_address = each.value.ipv4_address
   }
