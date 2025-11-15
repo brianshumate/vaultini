@@ -44,89 +44,11 @@ Follow these steps to make your own Vaultini.
 
 1. `cd vaultini`
 
-1. Add the Vaultini Certificate Authority to your OS trust store:
-
-   - **For macOS**
+1. Export the VAULT_CACERT environment variable to point to the Vaultini Certificate Authority file:
 
      ```shell
-     sudo security add-trusted-cert -d -r trustAsRoot \
-        -k /Library/Keychains/System.keychain \
-        ./containers/vaultini1/certs/vaultini-ca.pem
+     export VAULT_CACERT="$PWD/containers/vaultini1/certs/vaultini-ca.pem"
      ```
-
-       - The `sudo` command prompts for your user password and sometimes prompts twice; enter your user password to add the certificate.
-
-   - **For Linux**
-
-     - Alpine Linux
-
-       - Update the package cache and install the `ca-certificates` package.
-
-          ```shell
-          sudo apk update && sudo apk add ca-certificates
-          ```
-
-       - From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
-
-          ```shell
-          sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
-              /usr/local/share/ca-certificates/vaultini-ca.crt
-          ```
-
-       - Update the certificates database.
-
-          ```shell
-          sudo sudo update-ca-certificates
-          ```
-
-     - Debian & Ubuntu
-
-        Install the `ca-certificates` package.
-
-        ```shell
-        sudo apt install -y ca-certificates
-        ```
-
-       Copy the Vaultini CA certificate to `/usr/local/share/ca-certificates`.
-
-       ```shell
-       sudo cp containers/vaultini1/certs/vaultini-ca.pem \
-           /usr/local/share/ca-certificates/vaultini-ca.crt
-       ```
-
-       Update certificates.
-
-       ```shell
-       sudo update-ca-certificates
-       ```
-
-     - Red Hat Enterprise Linux
-
-       From within this repository directory, copy the Vaultini CA certificate to the `/etc/pki/ca-trust/source/anchors` directory.
-
-        ```shell
-        sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
-            /etc/pki/ca-trust/source/anchors/vaultini-ca.crt
-        ```
-
-        Update CA trust.
-
-        ```shell
-        sudo update-ca-trust
-        ```
-
-       From within this repository directory, copy the Vaultini CA certificate to the `/usr/local/share/ca-certificates` directory.
-
-        ```shell
-        sudo cp ./containers/vaultini1/certs/vaultini-ca.pem \
-            /usr/local/share/ca-certificates/vaultini-ca.crt
-        ```
-
-        Update certificates.
-
-        ```shell
-        sudo update-ca-certificates
-        ```
 
 2. Type `make` and press `[return]`; successful output resembles this example, and includes the unseal key and initial root token value for convenience:
 
@@ -157,20 +79,6 @@ To clean up **everything** including Terraform runtime configuration and state:
 ```shell
 make cleanest
 ```
-
-To remove the CA certificate from your OS trust store:
-
-- For macOS:
-
-  ```shell
-  sudo security delete-certificate -c "vaultini Intermediate Authority"
-  ```
-
-  - The `sudo` command prompts for your user password; enter your user password to add the certificate.
-
-- For Linux:
-
-  - Follow the documentation for your specific Linux distribution to remove the certificate.
 
 ### Notes
 
